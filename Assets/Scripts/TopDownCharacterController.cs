@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * TODO LIST
+ * Work on making the projectile fire from the player
+ * Work on fine tuning the Movement
+ */
+
 public class TopDownCharacterController : MonoBehaviour
 {
     //Reference to attached animator
@@ -17,11 +23,13 @@ public class TopDownCharacterController : MonoBehaviour
     //The speed at which they're moving
     private float playerSpeed = 1f;
 
+	Camera cam;
 
-    [Header("Movement parameters")]
+	[Header("Movement parameters")]
 
     //The maximum speed the player can move
     [SerializeField] private float playerMaxSpeed = 100f;
+    [SerializeField] private GameObject Projectile;
 
     
     /// <summary>
@@ -34,10 +42,10 @@ public class TopDownCharacterController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// When a fixed update cycle is called
-    /// </summary>
-    private void FixedUpdate()
+	/// <summary>
+	/// When a fixed update cycle is called
+	/// </summary>
+	private void FixedUpdate()
     {
         //Set the velocity to the direction they're moving in, multiplied
         //by the speed they're moving
@@ -50,7 +58,9 @@ public class TopDownCharacterController : MonoBehaviour
         if (!context.performed)
             return;
 
-        //Otherwise:
+		//Otherwise:
+		//SpawnProjectile();
+		SpawnPlayer();
         Debug.Log($"Shoot! {Time.time}", gameObject);
     }
 
@@ -91,4 +101,31 @@ public class TopDownCharacterController : MonoBehaviour
         //And set the speed to 1, so they move!
         playerSpeed = 1f;
     }
+
+	public void SpawnProjectile()
+	{
+		if(Mouse.current.leftButton.wasPressedThisFrame)
+		{
+			Vector3 MousePos = Mouse.current.position.ReadValue();
+			MousePos.z = Camera.main.nearClipPlane;
+			Vector3 WorldPos = Camera.main.ScreenToWorldPoint(MousePos);
+			Vector2 WorldPos2D = new Vector2(WorldPos.x, WorldPos.y);
+
+			Instantiate(Projectile, WorldPos2D, Quaternion.identity);
+		}
+	}
+
+	public void SpawnPlayer()
+	{
+		if (Mouse.current.leftButton.wasPressedThisFrame)
+		{
+			Vector3 MousePos = Mouse.current.position.ReadValue();
+			MousePos.z = Camera.main.nearClipPlane;
+			Vector3 WorldPos = Camera.main.ScreenToWorldPoint(MousePos);
+			Vector2 WorldPos2D = new Vector2(WorldPos.x, WorldPos.y);
+
+
+			Instantiate(this, WorldPos2D, Quaternion.identity);
+		}
+	}
 }
