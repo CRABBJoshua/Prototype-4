@@ -11,8 +11,8 @@ using UnityEngine.InputSystem;
 
 public class TopDownCharacterController : MonoBehaviour
 {
-    //Reference to attached animator
-    private Animator animator;
+	//Reference to attached animator
+	private Animator animator;
 
     //Reference to attached rigidbody 2D
     private Rigidbody2D rb;
@@ -31,16 +31,20 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] private float playerMaxSpeed = 100f;
     [SerializeField] private GameObject Projectile;
 
-    
-    /// <summary>
-    /// When the script first initialises
-    /// </summary>
-    private void Awake()
+	/// <summary>
+	/// When the script first initialises
+	/// </summary>
+	private void Awake()
     {
         //Get the attached components so we can use them later
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
+
+	void Update()
+	{
+		
+	}
 
 	/// <summary>
 	/// When a fixed update cycle is called
@@ -54,14 +58,14 @@ public class TopDownCharacterController : MonoBehaviour
 
     public void OnPlayerInputShoot(InputAction.CallbackContext context)
     {
-        //Not performed? Don't run any other code
-        if (!context.performed)
-            return;
+  //      //Not performed? Don't run any other code
+  //      if (!context.performed)
+  //          return;
 
-		//Otherwise:
-		//SpawnProjectile();
-		SpawnPlayer();
-        Debug.Log($"Shoot! {Time.time}", gameObject);
+		////Otherwise:
+		////SpawnProjectile();
+		////SpawnPlayer();
+		//Debug.Log($"Shoot! {Time.time}", gameObject);
     }
 
     /// <summary>
