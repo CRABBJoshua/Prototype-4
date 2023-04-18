@@ -116,7 +116,7 @@ public class TopDownCharacterController : MonoBehaviour
 			//positionInSpace.rotation = Quaternion.identity;
 			//transform.LookAt(positionInSpace);
 
-			Instantiate(Projectile, transform.position, transform.rotation);
+			Instantiate(Projectile, transform.position, Quaternion.identity);
 		}
 	}
 
