@@ -59,8 +59,8 @@ public class TopDownCharacterController : MonoBehaviour
             return;
 
 		//Otherwise:
-		//SpawnProjectile();
-		SpawnPlayer();
+		SpawnProjectile();
+		//SpawnPlayer();
         Debug.Log($"Shoot! {Time.time}", gameObject);
     }
 
@@ -110,8 +110,13 @@ public class TopDownCharacterController : MonoBehaviour
 			MousePos.z = Camera.main.nearClipPlane;
 			Vector3 WorldPos = Camera.main.ScreenToWorldPoint(MousePos);
 			Vector2 WorldPos2D = new Vector2(WorldPos.x, WorldPos.y);
+			Vector3 newDirection = Vector3.RotateTowards(transform.position, WorldPos2D, 0.0f, 0.0f);
+			//Transform positionInSpace = transform;
+			//positionInSpace.position = WorldPos;
+			//positionInSpace.rotation = Quaternion.identity;
+			//transform.LookAt(positionInSpace);
 
-			Instantiate(Projectile, WorldPos2D, Quaternion.identity);
+			Instantiate(Projectile, transform.position, transform.rotation);
 		}
 	}
 
