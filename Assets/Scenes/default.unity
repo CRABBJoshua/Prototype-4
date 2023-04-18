@@ -38702,7 +38702,6 @@ GameObject:
   - component: {fileID: 1861326226}
   - component: {fileID: 1861326228}
   - component: {fileID: 1861326227}
-  - component: {fileID: 1861326234}
   - component: {fileID: 1861326229}
   - component: {fileID: 1861326232}
   - component: {fileID: 1861326231}
@@ -38800,10 +38799,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3878f4d4-2f3b-497b-903d-5d83cfa81a05
     m_ActionName: Player/Shoot[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1b2b4d8c-4b24-4257-bed9-52341f92cf64
-    m_ActionName: Player/MousePosition[/Mouse/forwardButton,/Mouse/backButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -38928,17 +38923,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.07, y: 1.24}
   m_EdgeRadius: 0
---- !u!114 &1861326234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1861326223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 121f2e0c6e530d94886fe69359d7bbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 3002115784372848300, guid: efde4a281a1f8324990299d4e0c1ff8e, type: 3}
-  BulletSpeed: 1000
