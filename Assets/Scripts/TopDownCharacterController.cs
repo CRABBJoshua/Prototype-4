@@ -5,17 +5,23 @@ using UnityEngine.InputSystem;
 
 /*
  * TODO LIST
- * Work on making the projectile fire from the player
+ * Add a timer
  * Work on fine tuning the Movement
  */
 
 public class TopDownCharacterController : MonoBehaviour
 {
-    //Reference to attached animator
-    private Animator animator;
+	//WeaponTimer
+	public float WeaponTimer;
 
-    //Reference to attached rigidbody 2D
-    private Rigidbody2D rb;
+	//ShotCheck
+	private bool HasShot = false;
+
+	//RigidBody
+	private Rigidbody2D rb;
+
+	//Reference to attached animator
+	private Animator animator;
 
     //The direction the player is moving in
     private Vector2 playerDirection;
@@ -31,15 +37,16 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] private float playerMaxSpeed = 100f;
     [SerializeField] private GameObject Projectile;
 
-    
-    /// <summary>
-    /// When the script first initialises
-    /// </summary>
-    private void Awake()
+
+	/// <summary>
+	/// When the script first initialises
+	/// </summary>
+	private void Awake()
     {
         //Get the attached components so we can use them later
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+		cam = Camera.main;
     }
 
 	/// <summary>
@@ -106,17 +113,32 @@ public class TopDownCharacterController : MonoBehaviour
 	{
 		if(Mouse.current.leftButton.wasPressedThisFrame)
 		{
-			Vector3 MousePos = Mouse.current.position.ReadValue();
-			MousePos.z = Camera.main.nearClipPlane;
-			Vector3 WorldPos = Camera.main.ScreenToWorldPoint(MousePos);
-			Vector2 WorldPos2D = new Vector2(WorldPos.x, WorldPos.y);
-			Vector3 newDirection = Vector3.RotateTowards(transform.position, WorldPos2D, 0.0f, 0.0f);
-			//Transform positionInSpace = transform;
-			//positionInSpace.position = WorldPos;
-			//positionInSpace.rotation = Quaternion.identity;
-			//transform.LookAt(positionInSpace);
+			if(!HasShot)
+			{
+				//Get mouse position
+				Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-			Instantiate(Projectile, transform.position, Quaternion.identity);
+				//Get mouse position in the world
+				Vector3 worldMousePos = cam.ScreenToWorldPoint(mousePosition);
+				worldMousePos.z = transform.position.z;
+
+				//Get a vector looking towards that
+				Vector3 bulletDir = (worldMousePos - transform.position).normalized;
+
+				//Spawn the bullet
+				GameObject bullet = Instantiate(Projectile, transform.position, Quaternion.identity);
+				bullet.GetComponent<Projectile>().Force = bulletDir * 1000;
+
+				//Set the rotation to look along bulletDir
+				bullet.transform.rotation = Quaternion.FromToRotation(Vector2.up, bulletDir);
+				HasShot = true;
+			}
+			//Start Weapon Call Down
+			if(HasShot)
+			{
+				StartCoroutine(WeaponCoolDown());
+			}
+			
 		}
 	}
 
@@ -132,5 +154,12 @@ public class TopDownCharacterController : MonoBehaviour
 
 			Instantiate(this, WorldPos2D, Quaternion.identity);
 		}
+	}
+
+	IEnumerator WeaponCoolDown()
+	{
+		yield return new WaitForSeconds(WeaponTimer);
+		HasShot = false;
+		Debug.Log("CoolDown!");
 	}
 }
