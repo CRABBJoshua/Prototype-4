@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterBattle: {fileID: 8779934219557175564, guid: bde407691c7005443984a8ba62ec6e65, type: 3}
+  PlayerSprite: {fileID: 2800000, guid: 01c998a741c4eba45990b95dea2724f3, type: 3}
+  EnemySprite: {fileID: 2800000, guid: 9af18cac74fb5e747a8f73d072f9314c, type: 3}
 --- !u!4 &202158347
 Transform:
   m_ObjectHideFlags: 0
