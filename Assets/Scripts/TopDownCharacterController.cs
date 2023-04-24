@@ -136,6 +136,7 @@ public class TopDownCharacterController : MonoBehaviour
 			//Start Weapon Call Down
 			if(HasShot)
 			{
+				Debug.Log(HasShot);
 				StartCoroutine(WeaponCoolDown());
 			}
 			

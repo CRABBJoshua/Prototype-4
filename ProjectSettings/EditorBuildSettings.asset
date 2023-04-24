@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/default.unity
+    guid: 1c171270023f9154eb9cc30a2b9bf588
+  - enabled: 1
+    path: Assets/Scenes/TurnBasedBattle.unity
+    guid: bc8125949f7e4964c9b0c367108d47fd
   m_configObjects: {}
