@@ -11,6 +11,9 @@ public class CharacterBattle : MonoBehaviour
 	private Vector3 slideTargetPosition;
 	private Action onSlideComplete;
 
+	public AnimationCurve curve;
+	public float speed = 0.05f;
+
 	private enum State
 	{
 		Idle,
@@ -51,15 +54,15 @@ public class CharacterBattle : MonoBehaviour
 			case State.Idle:
 				break;
 			case State.Sliding:
-				float slideSpeed = 10f;
-				transform.position += (slideTargetPosition - GetPosition()) * slideSpeed * Time.deltaTime;
+				//float slideSpeed = 10f;
+				//transform.position += (slideTargetPosition - GetPosition()) * slideSpeed * Time.deltaTime;
 
 				float reachedDistance = 1f;
 				if(Vector3.Distance(GetPosition(), slideTargetPosition) < reachedDistance)
 				{
 					//Arrived at slide Target Position
-					transform.position = slideTargetPosition;
-					onSlideComplete();
+					//transform.position = slideTargetPosition;
+					//onSlideComplete();
 				}
 				break;
 			case State.Busy:
@@ -74,21 +77,7 @@ public class CharacterBattle : MonoBehaviour
 
 	public void Attack(CharacterBattle targetCharacterBattle, Action onAttackComplete)
 	{
-		Vector3 slideTargetPosition = targetCharacterBattle.GetPosition() + (GetPosition() - targetCharacterBattle.GetPosition()).normalized;
-		Vector3 startingPosition = GetPosition();
-
-		//Slide to target
-		SlideToPosition(slideTargetPosition, () =>
-		{
-			//Arrive at Target, attack him
-			Vector3 attackDir = targetCharacterBattle.GetPosition() - GetPosition().normalized;
-			//Attack completed, slide back
-			SlideToPosition(startingPosition, () =>
-			{
-				//Slide back completed, back to idle
-				onAttackComplete();
-			});
-		});
+		StartCoroutine(Slide(targetCharacterBattle, onAttackComplete));
 	}
 
 	public void GunAttack(CharacterBattle targetCharacterBattle, Action onAttackComplete)
@@ -101,10 +90,44 @@ public class CharacterBattle : MonoBehaviour
 		onAttackComplete();
 	}
 
-	private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
+	IEnumerator Slide(CharacterBattle targetCharacterBattle, Action onAttackComplete)
 	{
-		this.slideTargetPosition = slideTargetPosition;
-		this.onSlideComplete = onSlideComplete;
-		state = State.Sliding;
+		Vector3 slideTargetPosition = targetCharacterBattle.GetPosition() + (GetPosition() - targetCharacterBattle.GetPosition()).normalized;
+		Vector3 startingPosition = GetPosition();
+
+		//Implement slide:
+		//- save transform.position as "originalPos"
+		//- Lerp from transform.position -> slideTargetPosition
+		//- Lerp from slideTargetPosition -> originalPos
+		//..
+
+		Vector3 originalPos = transform.position;
+
+		float t = 0.0f;
+		
+
+		while(t < 1.0f)
+		{
+			t += speed;
+			//Lerp from transform.position -> slideTargetPosition
+			transform.position = Vector3.Lerp(originalPos, slideTargetPosition, curve.Evaluate(t));
+			yield return new WaitForEndOfFrame();
+		}
+
+
+		//Code for when the player is near the enemy
+		Debug.Log("damage effect");
+		t = 0.0f;
+
+		while(t < 1.0f)
+		{
+			t += speed;
+
+			//Lerp from transform.position -> slideTargetPosition
+			transform.position = Vector3.Lerp(slideTargetPosition, originalPos, curve.Evaluate(t));
+			yield return new WaitForEndOfFrame();
+		}
+
+		onAttackComplete.Invoke();
 	}
 }

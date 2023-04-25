@@ -18,6 +18,7 @@ public class BattleHandler : MonoBehaviour
 
 	private CharacterBattle playerCharacterBattle;
 	private CharacterBattle enemyCharacterBattle;
+	private CharacterBattle activeCharacterBattle;
 	private State state;
 
 	private enum State
@@ -34,9 +35,10 @@ public class BattleHandler : MonoBehaviour
 
 	private void Start()
 	{
-		playerCharacterBattle = SpawnCharacter(true);
-		enemyCharacterBattle = SpawnCharacter(false);
+		playerCharacterBattle = SpawnCharacter(true, "player");
+		enemyCharacterBattle = SpawnCharacter(false, "enemy");
 
+		SetActiveCharacterBattle(playerCharacterBattle);
 		state = State.WaitingForPlayer;
 	}
 
@@ -49,7 +51,8 @@ public class BattleHandler : MonoBehaviour
 				state = State.Busy;
 				playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
 				{
-					state = State.WaitingForPlayer;
+					//StartCoroutine(Delay());
+					Invoke("ChooseNextActiveCharacter", 2);
 				});
 			}
 			else if(Keyboard.current.eKey.wasPressedThisFrame)
@@ -57,14 +60,14 @@ public class BattleHandler : MonoBehaviour
 				state = State.Busy;
 				playerCharacterBattle.Attack(enemyCharacterBattle, () =>
 				{
-					state = State.WaitingForPlayer;
+					Invoke("ChooseNextActiveCharacter", 1);
 				});
 			}
 		}
 		
 	}
 
-	private CharacterBattle SpawnCharacter(bool isPlayerTeam)
+	private CharacterBattle SpawnCharacter(bool isPlayerTeam, string name)
 	{
 		Vector3 Position;
 		if (isPlayerTeam)
@@ -76,9 +79,42 @@ public class BattleHandler : MonoBehaviour
 			Position = new Vector3( 5, 0);
 		}
 		Transform characterTransform = Instantiate(CharacterBattle, Position, Quaternion.identity);
+		characterTransform.gameObject.name = name;
+
 		CharacterBattle characterBattle = characterTransform.GetComponent<CharacterBattle>();
 		characterBattle.SetUp(isPlayerTeam);
 
 		return characterBattle;
+	}
+
+	private void ChooseNextActiveCharacter()
+	{
+		if(activeCharacterBattle == playerCharacterBattle)
+		{
+			SetActiveCharacterBattle(enemyCharacterBattle);
+			state = State.Busy;
+
+			enemyCharacterBattle.Attack(playerCharacterBattle, () =>
+			{
+				ChooseNextActiveCharacter();
+			});
+		}
+		else
+		{
+			//Debug.Log("Set back to player");
+			SetActiveCharacterBattle(playerCharacterBattle);
+			state = State.WaitingForPlayer;
+		}
+	}
+
+	private void SetActiveCharacterBattle(CharacterBattle characterBattle)
+	{
+		//Debug.Log("Passed: " + characterBattle + ", Active: " + activeCharacterBattle + ", Enemy: " + enemyCharacterBattle);
+		activeCharacterBattle = characterBattle;
+	}
+
+	IEnumerator Delay()
+	{
+		yield return new WaitForSeconds(100);
 	}
 }
