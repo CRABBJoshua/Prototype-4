@@ -21,6 +21,13 @@ public class BattleHandler : MonoBehaviour
 	private CharacterBattle activeCharacterBattle;
 	private State state;
 
+	public int PlayerMaxHealth;
+	public int PlayerHealth;
+	public int EnemyMaxHealth;
+	public int EnemyHealth;
+	private int PlayerDamage;
+	private int EnemyDamage;
+
 	private enum State
 	{
 		WaitingForPlayer,
@@ -60,6 +67,18 @@ public class BattleHandler : MonoBehaviour
 				state = State.Busy;
 				playerCharacterBattle.Attack(enemyCharacterBattle, () =>
 				{
+					if(activeCharacterBattle == playerCharacterBattle)
+					{
+						PlayerDamage = Random.Range(0, 100);
+						EnemyHealth = EnemyHealth - PlayerDamage;
+						EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
+
+						if (EnemyHealth == 0)
+						{
+							Debug.Log("Enemy Dead");
+						}
+						Debug.Log(EnemyHealth);
+					}
 					Invoke("ChooseNextActiveCharacter", 1);
 				});
 			}
@@ -96,6 +115,18 @@ public class BattleHandler : MonoBehaviour
 
 			enemyCharacterBattle.Attack(playerCharacterBattle, () =>
 			{
+				if (activeCharacterBattle == enemyCharacterBattle)
+				{
+					EnemyDamage = Random.Range(0, 100);
+					PlayerHealth = PlayerHealth - EnemyDamage;
+					PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
+
+					if (PlayerHealth == 0)
+					{
+						Debug.Log("Player Dead");
+					}
+					Debug.Log(PlayerHealth);
+				}
 				ChooseNextActiveCharacter();
 			});
 		}
@@ -110,7 +141,12 @@ public class BattleHandler : MonoBehaviour
 	private void SetActiveCharacterBattle(CharacterBattle characterBattle)
 	{
 		//Debug.Log("Passed: " + characterBattle + ", Active: " + activeCharacterBattle + ", Enemy: " + enemyCharacterBattle);
+		if(activeCharacterBattle != null)
+		{
+			activeCharacterBattle.HideSelectionCircle();
+		}
 		activeCharacterBattle = characterBattle;
+		activeCharacterBattle.ShowSelectionCircle();
 	}
 
 	IEnumerator Delay()

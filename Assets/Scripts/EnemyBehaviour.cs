@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
 	Rigidbody2D rb;
 	public float direction;
 	public float movementSpeed;
+	public Transform Player;
 	private bool IsMoving = true;
 
 	void Awake()
@@ -50,7 +51,7 @@ public class EnemyBehaviour : MonoBehaviour
 		rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
 		yield return new WaitForSeconds(3);
 		IsMoving = false;
-		Debug.Log("Finished!");
+		//Debug.Log("Finished!");
 	}
 	IEnumerator StartMovement()
 	{
@@ -58,11 +59,17 @@ public class EnemyBehaviour : MonoBehaviour
 		rb.velocity = new Vector2(-direction * movementSpeed, rb.velocity.y);
 		yield return new WaitForSeconds(3);
 		IsMoving = true;
-		Debug.Log("Finished!");
+		//Debug.Log("Finished!");
 	}
 
 	void Update()
     {
-		
+		//Vector3 Forward = Vector3.forward;
+		//Vector3 toOther = Player.position - transform.position;
+
+		//if(Vector3.Dot(Forward, toOther) < 0)
+		//{
+		//	Debug.Log("The other transform is behind me!");
+		//}
     }
 }

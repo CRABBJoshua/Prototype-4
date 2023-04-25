@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterBattle : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CharacterBattle : MonoBehaviour
 	private State state;
 	private Vector3 slideTargetPosition;
 	private Action onSlideComplete;
+	private GameObject SelectionCircleGameObject;
 
 	public AnimationCurve curve;
 	public float speed = 0.05f;
@@ -24,6 +26,9 @@ public class CharacterBattle : MonoBehaviour
 	private void Awake()
 	{
 		characterBase = GetComponent<TopDownCharacterController>();
+		SelectionCircleGameObject = transform.Find("Selection Circle").gameObject;
+		HideSelectionCircle();
+		state = State.Idle;
 	}
 
 	private void Start()
@@ -104,9 +109,8 @@ public class CharacterBattle : MonoBehaviour
 		Vector3 originalPos = transform.position;
 
 		float t = 0.0f;
-		
 
-		while(t < 1.0f)
+		while (t < 1.0f)
 		{
 			t += speed;
 			//Lerp from transform.position -> slideTargetPosition
@@ -114,9 +118,6 @@ public class CharacterBattle : MonoBehaviour
 			yield return new WaitForEndOfFrame();
 		}
 
-
-		//Code for when the player is near the enemy
-		Debug.Log("damage effect");
 		t = 0.0f;
 
 		while(t < 1.0f)
@@ -129,5 +130,15 @@ public class CharacterBattle : MonoBehaviour
 		}
 
 		onAttackComplete.Invoke();
+	}
+
+	public void HideSelectionCircle()
+	{
+		SelectionCircleGameObject.SetActive(false);
+	}
+
+	public void ShowSelectionCircle()
+	{
+		SelectionCircleGameObject.SetActive(true);
 	}
 }
