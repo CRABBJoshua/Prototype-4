@@ -132,12 +132,13 @@ public class TopDownCharacterController : MonoBehaviour
 				//Set the rotation to look along bulletDir
 				bullet.transform.rotation = Quaternion.FromToRotation(Vector2.up, bulletDir);
 				HasShot = true;
+				StartCoroutine(WeaponCoolDown());
 			}
 			//Start Weapon Call Down
-			if(HasShot)
+			else if(HasShot)
 			{
 				Debug.Log(HasShot);
-				StartCoroutine(WeaponCoolDown());
+				
 			}
 			
 		}

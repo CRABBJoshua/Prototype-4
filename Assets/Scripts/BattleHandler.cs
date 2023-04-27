@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
+
 
 public class BattleHandler : MonoBehaviour
 {
@@ -49,42 +50,94 @@ public class BattleHandler : MonoBehaviour
 		state = State.WaitingForPlayer;
 	}
 
-	private void Update()
+	public void OnPlayerRequestAttack()
+	{
+		//Stuff
+		Debug.Log("attack!");
+		if (state == State.WaitingForPlayer)
+		{
+			state = State.Busy;
+			playerCharacterBattle.Attack(enemyCharacterBattle, () =>
+			{
+				if (activeCharacterBattle == playerCharacterBattle)
+				{
+					PlayerDamage = Random.Range(0, 100);
+					EnemyHealth = EnemyHealth - PlayerDamage;
+					EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
+
+					if (EnemyHealth == 0)
+					{
+						Debug.Log("Enemy Dead");
+
+						CombatManager cm = FindObjectOfType<CombatManager>();
+						if (cm != null)
+						{
+							cm.EndCombat();
+							Debug.Log("asdasd");
+						}
+						//CombatManager.instance.EndCombat();
+					}
+					Debug.Log(EnemyHealth);
+				}
+				Invoke("ChooseNextActiveCharacter", 1);
+			});
+		}
+	}
+
+	public void OnPlayerRequestRangedAttack()
 	{
 		if (state == State.WaitingForPlayer)
 		{
-			if (Keyboard.current.spaceKey.wasPressedThisFrame)
+			state = State.Busy;
+			playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
 			{
-				state = State.Busy;
-				playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
-				{
-					//StartCoroutine(Delay());
-					Invoke("ChooseNextActiveCharacter", 2);
-				});
-			}
-			else if(Keyboard.current.eKey.wasPressedThisFrame)
-			{
-				state = State.Busy;
-				playerCharacterBattle.Attack(enemyCharacterBattle, () =>
-				{
-					if(activeCharacterBattle == playerCharacterBattle)
-					{
-						PlayerDamage = Random.Range(0, 100);
-						EnemyHealth = EnemyHealth - PlayerDamage;
-						EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
-
-						if (EnemyHealth == 0)
-						{
-							Debug.Log("Enemy Dead");
-						}
-						Debug.Log(EnemyHealth);
-					}
-					Invoke("ChooseNextActiveCharacter", 1);
-				});
-			}
+				//StartCoroutine(Delay());
+				Invoke("ChooseNextActiveCharacter", 2);
+			});
 		}
+	}
+
+	public void OnPlayerRequestQuit()
+	{
 		
 	}
+
+	//private void Update()
+	//{
+	//	if (state == State.WaitingForPlayer)
+	//	{
+	//		if (Keyboard.current.spaceKey.wasPressedThisFrame)
+	//		{
+	//			state = State.Busy;
+	//			playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
+	//			{
+	//				//StartCoroutine(Delay());
+	//				Invoke("ChooseNextActiveCharacter", 2);
+	//			});
+	//		}
+	//		else if(Keyboard.current.eKey.wasPressedThisFrame)
+	//		{
+	//			state = State.Busy;
+	//			playerCharacterBattle.Attack(enemyCharacterBattle, () =>
+	//			{
+	//				if(activeCharacterBattle == playerCharacterBattle)
+	//				{
+	//					PlayerDamage = Random.Range(0, 100);
+	//					EnemyHealth = EnemyHealth - PlayerDamage;
+	//					EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
+
+	//					if (EnemyHealth == 0)
+	//					{
+	//						Debug.Log("Enemy Dead");
+	//					}
+	//					Debug.Log(EnemyHealth);
+	//				}
+	//				Invoke("ChooseNextActiveCharacter", 1);
+	//			});
+	//		}
+	//	}
+		
+	//}
 
 	private CharacterBattle SpawnCharacter(bool isPlayerTeam, string name)
 	{

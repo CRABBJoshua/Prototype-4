@@ -33,7 +33,7 @@ public class CharacterBattle : MonoBehaviour
 
 	private void Start()
 	{
-		
+		SetUp(true);
 	}
 
 	public void SetUp(bool isPlayerTeam)

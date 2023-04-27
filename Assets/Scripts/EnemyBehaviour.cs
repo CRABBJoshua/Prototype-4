@@ -18,15 +18,21 @@ public class EnemyBehaviour : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(collision.tag == "Player")
+		if (collision.tag == "Player")
 		{
-			
+			CombatManager cm = FindObjectOfType<CombatManager>();
+			if (cm != null)
+			{
+
+				cm.StartCombat();
+			}
+			//CombatManager.instance.StartCombat();
 		}
 	}
 
 	void Start()
-    {
-		
+	{
+
 	}
 
 	void FixedUpdate()
@@ -42,7 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
 			//If false then start movement
 			StartCoroutine(StartMovement());
 		}
-	
+
 	}
 
 	IEnumerator StopMovement()
@@ -63,13 +69,19 @@ public class EnemyBehaviour : MonoBehaviour
 	}
 
 	void Update()
-    {
-		//Vector3 Forward = Vector3.forward;
-		//Vector3 toOther = Player.position - transform.position;
+	{
+		Vector3 Forward = -transform.right.normalized;
+		Vector3 toOther = (Player.position - transform.position).normalized;
 
-		//if(Vector3.Dot(Forward, toOther) < 0)
-		//{
-		//	Debug.Log("The other transform is behind me!");
-		//}
-    }
+		Forward.z = toOther.z = 0;
+
+		float dot = Vector2.Dot(toOther, Forward);
+
+		Debug.DrawLine(transform.position, transform.position + Forward);
+
+		if (Mathf.Abs(dot) < 0.5f)
+		{
+			Debug.Log("The other transform is behind me!");
+		}
+	}
 }
