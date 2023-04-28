@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class EnemyBehaviour : MonoBehaviour
 	public float movementSpeed;
 	public Transform Player;
 	private bool IsMoving = true;
+	public float radius = 1f;
+	private bool isChasingPlayer = false;
 
 	void Awake()
 	{
@@ -23,7 +26,6 @@ public class EnemyBehaviour : MonoBehaviour
 			CombatManager cm = FindObjectOfType<CombatManager>();
 			if (cm != null)
 			{
-
 				cm.StartCombat();
 			}
 			//CombatManager.instance.StartCombat();
@@ -32,40 +34,70 @@ public class EnemyBehaviour : MonoBehaviour
 
 	void Start()
 	{
-
+		StartCoroutine(EnemyBehaviourRoutine());
 	}
 
-	void FixedUpdate()
+	private void ChasePlayer()
 	{
-		//Checks if the AI is moving
-		if (IsMoving)
-		{
-			//If true start the coroutine
-			StartCoroutine(StopMovement());
-		}
-		else
-		{
-			//If false then start movement
-			StartCoroutine(StartMovement());
-		}
-
+		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+		
 	}
 
-	IEnumerator StopMovement()
+	private IEnumerator EnemyBehaviourRoutine()
+	{
+		while (true)
+		{
+			if (isChasingPlayer)
+			{
+				yield return new WaitForEndOfFrame();
+				continue;
+			}
+
+			StartMovement();
+			yield return new WaitForSeconds(2.0f);
+
+			if (isChasingPlayer)
+				continue;
+
+			StopMovement();
+			yield return new WaitForSeconds(2.0f);
+		}
+	}
+
+
+	void StartMovement()
 	{
 		//Move the player for 3 secs and then set IsMoving to false
 		rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
-		yield return new WaitForSeconds(3);
 		IsMoving = false;
+		transform.Rotate(Vector3.forward * 180f);
 		//Debug.Log("Finished!");
 	}
-	IEnumerator StartMovement()
+	void StopMovement()
 	{
 		//This does StopMovement in reverse
 		rb.velocity = new Vector2(-direction * movementSpeed, rb.velocity.y);
-		yield return new WaitForSeconds(3);
 		IsMoving = true;
+
+		transform.Rotate(Vector3.forward * 180f);
 		//Debug.Log("Finished!");
+	}
+
+	private void OnDrawGizmos()
+	{
+		Vector3 Forward = -transform.right.normalized;
+		Vector3 toOther = (Player.position - transform.position).normalized;
+
+		Forward.z = toOther.z = 0;
+
+		float dot = Vector2.Dot(toOther, Forward);
+
+		Handles.Label(transform.position + Vector3.up * 1f, $"Dot: {dot}");
+		
+		Gizmos.DrawLine(transform.position, transform.position + Forward);
+		Gizmos.DrawLine(transform.position, transform.position + toOther);
+		Gizmos.DrawWireSphere(transform.position, radius);
+
 	}
 
 	void Update()
@@ -77,11 +109,15 @@ public class EnemyBehaviour : MonoBehaviour
 
 		float dot = Vector2.Dot(toOther, Forward);
 
-		Debug.DrawLine(transform.position, transform.position + Forward);
-
-		if (Mathf.Abs(dot) < 0.5f)
+		
+		if (dot > 0.5f && Vector3.Distance(Player.position, transform.position) < radius)
 		{
-			Debug.Log("The other transform is behind me!");
+			isChasingPlayer = true;
+			ChasePlayer();
+		}
+		else
+		{
+			isChasingPlayer = false;
 		}
 	}
 }

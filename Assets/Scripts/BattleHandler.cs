@@ -29,11 +29,16 @@ public class BattleHandler : MonoBehaviour
 	private int PlayerDamage;
 	private int EnemyDamage;
 
+	public void DestroyEnemyAndPlayer()
+	{
+		Destroy(playerCharacterBattle.gameObject);
+		Destroy(enemyCharacterBattle.gameObject);
+	}
+
 	private enum State
 	{
 		WaitingForPlayer,
 		Busy,
-
 	}
 
 	private void Awake()
@@ -96,10 +101,11 @@ public class BattleHandler : MonoBehaviour
 			});
 		}
 	}
-
+	
 	public void OnPlayerRequestQuit()
 	{
-		
+		CombatManager cm = FindObjectOfType<CombatManager>();
+		cm.RunningAwayFromCombat();
 	}
 
 	//private void Update()

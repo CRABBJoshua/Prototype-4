@@ -38644,6 +38644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 964677017}
   enemy: {fileID: 1352232151}
+  cinemachineCam: {fileID: 519420033}
 --- !u!4 &1633189795
 Transform:
   m_ObjectHideFlags: 0
@@ -38772,6 +38773,10 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1861326226}
+    - target: {fileID: 606516011128514325, guid: ee214a74957e052409aa78ac99b3c385, type: 3}
+      propertyPath: radius
+      value: 6.11
+      objectReference: {fileID: 0}
     - target: {fileID: 606516011128514327, guid: ee214a74957e052409aa78ac99b3c385, type: 3}
       propertyPath: m_RootOrder
       value: 4
