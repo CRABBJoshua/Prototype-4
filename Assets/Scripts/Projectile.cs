@@ -11,4 +11,10 @@ public class Projectile : MonoBehaviour
     {
 		projectile.GetComponent<Rigidbody2D>().AddForce(Force);
     }
+
+	private void OnColliderOverlap (Collider other)
+	{
+		Debug.Log("Shot");
+		
+	}
 }

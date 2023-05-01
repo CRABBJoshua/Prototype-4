@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.ShaderGraph.Internal;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+	public GameObject player;
+	public float speed;
+
+	private float distance;
+
 	Rigidbody2D rb;
 	public float direction;
 	public float movementSpeed;
 	public Transform Player;
-	private bool IsMoving = true;
 	public float radius = 1f;
 	private bool isChasingPlayer = false;
 
@@ -40,7 +45,10 @@ public class EnemyBehaviour : MonoBehaviour
 	private void ChasePlayer()
 	{
 		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		
+		distance = Vector2.Distance(transform.position, player.transform.position);
+		Vector2 direction = player.transform.position - transform.position;
+
+		transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
 	}
 
 	private IEnumerator EnemyBehaviourRoutine()
@@ -69,7 +77,6 @@ public class EnemyBehaviour : MonoBehaviour
 	{
 		//Move the player for 3 secs and then set IsMoving to false
 		rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
-		IsMoving = false;
 		transform.Rotate(Vector3.forward * 180f);
 		//Debug.Log("Finished!");
 	}
@@ -77,7 +84,6 @@ public class EnemyBehaviour : MonoBehaviour
 	{
 		//This does StopMovement in reverse
 		rb.velocity = new Vector2(-direction * movementSpeed, rb.velocity.y);
-		IsMoving = true;
 
 		transform.Rotate(Vector3.forward * 180f);
 		//Debug.Log("Finished!");
