@@ -52,6 +52,7 @@ public class CombatManager : MonoBehaviour
 	{
 		player.SetActive(false);
 		enemy.SetActive(false);
+		BattleHandler.TextureToSet = enemy.GetComponent<EnemyBehaviour>().texture;
 		SceneManager.LoadSceneAsync("TurnBasedBattle", LoadSceneMode.Additive);
 		SetCameraLookatPos(Vector3.zero);
 	}
@@ -70,8 +71,14 @@ public class CombatManager : MonoBehaviour
 	{
 		BattleHandler.GetInstance().DestroyEnemyAndPlayer();
 		player.SetActive(true);
-		enemy.SetActive(true);
+		enemy.SetActive(false);
+		Invoke("SetEnemy", 5);
 		SceneManager.UnloadSceneAsync("TurnBasedBattle", UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 		ResetCameraLookatPlayer();
+	}
+
+	public void SetEnemy()
+	{
+		enemy.SetActive(true);
 	}
 }

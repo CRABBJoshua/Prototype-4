@@ -298,10 +298,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projectile: {fileID: 3002115784372848300, guid: efde4a281a1f8324990299d4e0c1ff8e, type: 3}
-  PlayerMaxHealth: 100
-  PlayerHealth: 100
-  EnemyMaxHealth: 100
-  EnemyHealth: 100
   curve:
     serializedVersion: 2
     m_Curve:
@@ -356,7 +352,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8779934219557175569}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 031489eb5a4cdb24fab56c3ba55f5480, type: 2}
   m_CullingMode: 0

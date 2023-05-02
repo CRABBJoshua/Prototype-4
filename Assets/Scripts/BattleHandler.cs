@@ -13,7 +13,9 @@ public class BattleHandler : MonoBehaviour
 		return instance;
 	}
 
-	[SerializeField] private Transform CharacterBattle;
+	public static Sprite TextureToSet;
+
+	[SerializeField] private GameObject CharacterBattle;
 	public Texture2D PlayerSprite;
 	public Texture2D EnemySprite;
 
@@ -28,6 +30,8 @@ public class BattleHandler : MonoBehaviour
 	public int EnemyHealth;
 	private int PlayerDamage;
 	private int EnemyDamage;
+
+	public HealthComponent Health;
 
 	public void DestroyEnemyAndPlayer()
 	{
@@ -50,6 +54,10 @@ public class BattleHandler : MonoBehaviour
 	{
 		playerCharacterBattle = SpawnCharacter(true, "player");
 		enemyCharacterBattle = SpawnCharacter(false, "enemy");
+
+		Debug.Log(enemyCharacterBattle.GetComponent<SpriteRenderer>().sprite);
+
+		Health.SetMaxHealth(PlayerMaxHealth);
 
 		SetActiveCharacterBattle(playerCharacterBattle);
 		state = State.WaitingForPlayer;
@@ -142,7 +150,7 @@ public class BattleHandler : MonoBehaviour
 	//			});
 	//		}
 	//	}
-		
+
 	//}
 
 	private CharacterBattle SpawnCharacter(bool isPlayerTeam, string name)
@@ -156,7 +164,7 @@ public class BattleHandler : MonoBehaviour
 		{
 			Position = new Vector3( 5, 0);
 		}
-		Transform characterTransform = Instantiate(CharacterBattle, Position, Quaternion.identity);
+		Transform characterTransform = Instantiate(CharacterBattle.gameObject, Position, Quaternion.identity).transform;
 		characterTransform.gameObject.name = name;
 
 		CharacterBattle characterBattle = characterTransform.GetComponent<CharacterBattle>();
@@ -179,6 +187,7 @@ public class BattleHandler : MonoBehaviour
 					EnemyDamage = Random.Range(0, 100);
 					PlayerHealth = PlayerHealth - EnemyDamage;
 					PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
+					Health.SetHealth(PlayerHealth);
 
 					if (PlayerHealth == 0)
 					{

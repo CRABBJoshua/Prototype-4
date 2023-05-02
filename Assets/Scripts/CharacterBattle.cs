@@ -48,13 +48,20 @@ public class CharacterBattle : MonoBehaviour
 		{
 			Debug.Log("Enemy Sprite Loaded");
 			//characterBase.GetMaterial().mainTexture = BattleHandler.GetInstance().PlayerSprite;
-			characterBase.GetComponent<Renderer>().material.mainTexture = BattleHandler.GetInstance().EnemySprite;
+			//gameObject.GetComponent<SpriteRenderer>().material.mainTexture = BattleHandler.GetInstance().EnemySprite;
+			gameObject.GetComponent<SpriteRenderer>().sprite = BattleHandler.TextureToSet;
+
+
+			//Debug.Log(BattleHandler.GetInstance().EnemySprite);
 		}
 	}
 
+
 	private void Update()
 	{
-		switch(state)
+		Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
+
+		switch (state)
 		{
 			case State.Idle:
 				break;

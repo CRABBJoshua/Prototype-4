@@ -38962,6 +38962,10 @@ PrefabInstance:
       propertyPath: radius
       value: 6.11
       objectReference: {fileID: 0}
+    - target: {fileID: 606516011128514325, guid: ee214a74957e052409aa78ac99b3c385, type: 3}
+      propertyPath: texture
+      value: 
+      objectReference: {fileID: 21300000, guid: 48786454efa14444ab0dbc6b57c3b82e, type: 3}
     - target: {fileID: 606516011128514327, guid: ee214a74957e052409aa78ac99b3c385, type: 3}
       propertyPath: m_RootOrder
       value: 4
