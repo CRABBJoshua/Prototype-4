@@ -18,6 +18,7 @@ public class EnemyBehaviour : MonoBehaviour
 	public float radius = 1f;
 	private bool isChasingPlayer = false;
 	public Sprite texture;
+	public int EnemyHealth;
 
 	void Awake()
 	{

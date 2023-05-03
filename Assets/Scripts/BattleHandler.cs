@@ -32,6 +32,7 @@ public class BattleHandler : MonoBehaviour
 	private int EnemyDamage;
 
 	public HealthComponent Health;
+	public EnemyHealthComponent EnemyHealthComponent;
 
 	public void DestroyEnemyAndPlayer()
 	{
@@ -58,6 +59,7 @@ public class BattleHandler : MonoBehaviour
 		Debug.Log(enemyCharacterBattle.GetComponent<SpriteRenderer>().sprite);
 
 		Health.SetMaxHealth(PlayerMaxHealth);
+		EnemyHealthComponent.SetMaxHealth(EnemyMaxHealth);
 
 		SetActiveCharacterBattle(playerCharacterBattle);
 		state = State.WaitingForPlayer;
@@ -74,9 +76,10 @@ public class BattleHandler : MonoBehaviour
 			{
 				if (activeCharacterBattle == playerCharacterBattle)
 				{
-					PlayerDamage = Random.Range(0, 100);
+					PlayerDamage = Random.Range(10, 40);
 					EnemyHealth = EnemyHealth - PlayerDamage;
 					EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
+					EnemyHealthComponent.SetHealth(EnemyHealth);
 
 					if (EnemyHealth == 0)
 					{
@@ -184,7 +187,7 @@ public class BattleHandler : MonoBehaviour
 			{
 				if (activeCharacterBattle == enemyCharacterBattle)
 				{
-					EnemyDamage = Random.Range(0, 100);
+					EnemyDamage = Random.Range(10, 20);
 					PlayerHealth = PlayerHealth - EnemyDamage;
 					PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
 					Health.SetHealth(PlayerHealth);
