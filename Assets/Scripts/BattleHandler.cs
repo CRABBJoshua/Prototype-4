@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
+//If Player attacks
+//Play Particle
+
+//Stop Particle on attack end
 
 public class BattleHandler : MonoBehaviour
 {
@@ -33,6 +37,7 @@ public class BattleHandler : MonoBehaviour
 
 	public HealthComponent Health;
 	public EnemyHealthComponent EnemyHealthComponent;
+	public GameObject SlashParticle;
 
 	public void DestroyEnemyAndPlayer()
 	{
