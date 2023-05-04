@@ -7,25 +7,29 @@ public class Projectile : MonoBehaviour
 	public GameObject projectile;
 	public float launchVelocity = 700f;
 	public Vector2 Force;
-	private EnemyBehaviour EnemyBehaviour;
+	//private EnemyBehaviour EnemyBehaviour;
 	public int ProjectileDamage;
-    void Start()
+	void Start()
     {
 		projectile.GetComponent<Rigidbody2D>().AddForce(Force);
     }
 
 	private void Awake()
 	{
-		EnemyBehaviour = GetComponent<EnemyBehaviour>();
+
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "Enemy")
 		{
-			EnemyBehaviour.EnemyHealth -= ProjectileDamage;
+			Debug.Log("WAP");
+			EnemyBehaviour enemyBehaviour = collision.GetComponent<EnemyBehaviour>();
+
+			enemyBehaviour.EnemyHealth -= ProjectileDamage;
+			Debug.Log(enemyBehaviour.EnemyHealth);
+
 			Destroy(this);
-			Debug.Log(EnemyBehaviour.EnemyHealth);
 		}
 	}
 }

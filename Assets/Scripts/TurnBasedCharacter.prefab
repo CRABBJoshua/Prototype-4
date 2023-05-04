@@ -299,7 +299,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projectile: {fileID: 3002115784372848300, guid: efde4a281a1f8324990299d4e0c1ff8e, type: 3}
-  SlashParticle: {fileID: 3680786989662796048, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -428,7 +427,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -504,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlashParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 3680786989662796048, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3761566177008879600, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.44
@@ -519,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 6971383847542766297, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763235254754103378, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

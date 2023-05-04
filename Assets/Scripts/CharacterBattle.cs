@@ -59,7 +59,7 @@ public class CharacterBattle : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
+		//Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
 
 		switch (state)
 		{

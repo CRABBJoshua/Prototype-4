@@ -117,6 +117,10 @@ public class EnemyBehaviour : MonoBehaviour
 
 		float dot = Vector2.Dot(toOther, Forward);
 
+		if(EnemyHealth <= 0)
+		{
+			Destroy(gameObject);
+		}
 		
 		if (dot > 0.5f && Vector3.Distance(Player.position, transform.position) < radius)
 		{
@@ -127,5 +131,10 @@ public class EnemyBehaviour : MonoBehaviour
 		{
 			isChasingPlayer = false;
 		}
+	}
+
+	public void TakeDamage()
+	{
+
 	}
 }

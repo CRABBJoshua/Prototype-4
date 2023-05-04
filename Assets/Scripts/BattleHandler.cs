@@ -37,7 +37,6 @@ public class BattleHandler : MonoBehaviour
 
 	public HealthComponent Health;
 	public EnemyHealthComponent EnemyHealthComponent;
-	public GameObject SlashParticle;
 
 	public void DestroyEnemyAndPlayer()
 	{
@@ -113,6 +112,7 @@ public class BattleHandler : MonoBehaviour
 			playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
 			{
 				//StartCoroutine(Delay());
+				Invoke("TakeRangedDamage", 1);
 				Invoke("ChooseNextActiveCharacter", 2);
 			});
 		}
@@ -175,6 +175,11 @@ public class BattleHandler : MonoBehaviour
 		Transform characterTransform = Instantiate(CharacterBattle.gameObject, Position, Quaternion.identity).transform;
 		characterTransform.gameObject.name = name;
 
+		if (!isPlayerTeam)
+		{
+			characterTransform.tag = "Enemy";
+		}
+
 		CharacterBattle characterBattle = characterTransform.GetComponent<CharacterBattle>();
 		characterBattle.SetUp(isPlayerTeam);
 
@@ -228,5 +233,13 @@ public class BattleHandler : MonoBehaviour
 	IEnumerator Delay()
 	{
 		yield return new WaitForSeconds(100);
+	}
+
+	public void TakeRangedDamage()
+	{
+		PlayerDamage = Random.Range(20, 60);
+		EnemyHealth = EnemyHealth - PlayerDamage;
+		EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
+		EnemyHealthComponent.SetHealth(EnemyHealth);
 	}
 }
