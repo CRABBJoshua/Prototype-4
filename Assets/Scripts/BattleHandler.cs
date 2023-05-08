@@ -111,7 +111,6 @@ public class BattleHandler : MonoBehaviour
 			state = State.Busy;
 			playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
 			{
-				//StartCoroutine(Delay());
 				Invoke("TakeRangedDamage", 1);
 				Invoke("ChooseNextActiveCharacter", 2);
 			});

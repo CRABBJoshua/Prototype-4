@@ -14,6 +14,8 @@ public class TopDownCharacterController : MonoBehaviour
 	//WeaponTimer
 	public float WeaponTimer;
 
+	public WeaponDelay wd;
+
 	//ShotCheck
 	private bool HasShot = false;
 
@@ -57,6 +59,7 @@ public class TopDownCharacterController : MonoBehaviour
         //Set the velocity to the direction they're moving in, multiplied
         //by the speed they're moving
         rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
+		wd.SetDelay(WeaponTimer);
     }
 
     public void OnPlayerInputShoot(InputAction.CallbackContext context)

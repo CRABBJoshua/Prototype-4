@@ -57,6 +57,11 @@ public class CombatManager : MonoBehaviour
 		SetCameraLookatPos(Vector3.zero);
 	}
 
+	public void GameOver()
+	{
+		SceneManager.LoadSceneAsync("GameOver UI", LoadSceneMode.Additive);
+	}
+
 	public void EndCombat()
 	{
 		BattleHandler.GetInstance().DestroyEnemyAndPlayer();
