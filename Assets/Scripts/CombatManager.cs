@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
-	//public static CombatManager instance;
+	public static CombatManager instance;
 	[SerializeField] GameObject player;
-	[SerializeField] GameObject enemy;
+	public GameObject enemy;
 	[SerializeField] Cinemachine.CinemachineVirtualCamera cinemachineCam;
 
 	private Transform emptyTransform;
@@ -19,14 +19,14 @@ public class CombatManager : MonoBehaviour
 
 		obj.transform.position = Vector3.zero;
 
-		//if (instance != null && instance != this)
-		//{
-		//	Destroy(this);
-		//}
-		//else
-		//{
-		//	instance = this;
-		//}
+		if (instance != null && instance != this)
+		{
+			Destroy(this);
+		}
+		else
+		{
+			instance = this;
+		}
 	}
 
 	public void SetCameraLookatPos(Vector3 position)

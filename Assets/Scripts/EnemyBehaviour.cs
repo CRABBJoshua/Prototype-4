@@ -33,6 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
 			CombatManager cm = FindObjectOfType<CombatManager>();
 			if (cm != null)
 			{
+				cm.enemy = gameObject;
 				cm.StartCombat();
 			}
 			//CombatManager.instance.StartCombat();

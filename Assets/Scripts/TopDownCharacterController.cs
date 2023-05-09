@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 /*
  * TODO LIST
  * Add a timer
@@ -60,9 +60,13 @@ public class TopDownCharacterController : MonoBehaviour
         //by the speed they're moving
         rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
 		wd.SetDelay(WeaponTimer);
-    }
+		if (Keyboard.current.escapeKey.wasPressedThisFrame)
+		{
+			SceneManager.LoadScene(0);
+		}
+	}
 
-    public void OnPlayerInputShoot(InputAction.CallbackContext context)
+	public void OnPlayerInputShoot(InputAction.CallbackContext context)
     {
         //Not performed? Don't run any other code
         if (!context.performed)
