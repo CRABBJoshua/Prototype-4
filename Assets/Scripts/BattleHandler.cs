@@ -80,7 +80,7 @@ public class BattleHandler : MonoBehaviour
 			{
 				if (activeCharacterBattle == playerCharacterBattle)
 				{
-					PlayerDamage = Random.Range(10, 40);
+					PlayerDamage = Random.Range(10, 60);
 					EnemyHealth = EnemyHealth - PlayerDamage;
 					EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
 					EnemyHealthComponent.SetHealth(EnemyHealth);
@@ -196,7 +196,7 @@ public class BattleHandler : MonoBehaviour
 			{
 				if (activeCharacterBattle == enemyCharacterBattle)
 				{
-					EnemyDamage = Random.Range(10, 20);
+					EnemyDamage = Random.Range(10, 50);
 					PlayerHealth = PlayerHealth - EnemyDamage;
 					PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
 					Health.SetHealth(PlayerHealth);
@@ -204,6 +204,11 @@ public class BattleHandler : MonoBehaviour
 					if (PlayerHealth == 0)
 					{
 						Debug.Log("Player Dead");
+						CombatManager cm = FindObjectOfType<CombatManager>();
+						if (cm != null)
+						{
+							cm.GameOver();
+						}
 					}
 					Debug.Log(PlayerHealth);
 				}

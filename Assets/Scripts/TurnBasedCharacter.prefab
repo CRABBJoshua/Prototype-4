@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponTimer: 0
+  wd: {fileID: 0}
   playerMaxSpeed: 200
   Projectile: {fileID: 3002115784372848300, guid: efde4a281a1f8324990299d4e0c1ff8e, type: 3}
 --- !u!114 &-8888826338832471154

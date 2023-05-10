@@ -59,7 +59,7 @@ public class CombatManager : MonoBehaviour
 
 	public void GameOver()
 	{
-		SceneManager.LoadSceneAsync("GameOver UI", LoadSceneMode.Additive);
+		SceneManager.LoadScene(3);
 	}
 
 	public void EndCombat()
