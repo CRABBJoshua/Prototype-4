@@ -39,6 +39,8 @@ public class BattleHandler : MonoBehaviour
 	public EnemyHealthComponent EnemyHealthComponent;
 	public GameObject Slash;
 
+	private int RunNumber = 0;
+
 	public void DestroyEnemyAndPlayer()
 	{
 		Destroy(playerCharacterBattle.gameObject);
@@ -121,7 +123,17 @@ public class BattleHandler : MonoBehaviour
 	public void OnPlayerRequestQuit()
 	{
 		CombatManager cm = FindObjectOfType<CombatManager>();
-		cm.RunningAwayFromCombat();
+		RunNumber = Random.Range(1, 10);
+		
+		if(RunNumber == 5)
+		{
+			cm.RunningAwayFromCombat();
+		}
+		else
+		{
+			Debug.Log("Could Not Run Away");
+			Invoke("ChooseNextActiveCharacter", 2);
+		}
 	}
 
 	//private void Update()
@@ -246,5 +258,16 @@ public class BattleHandler : MonoBehaviour
 		EnemyHealth = EnemyHealth - PlayerDamage;
 		EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
 		EnemyHealthComponent.SetHealth(EnemyHealth);
+
+		if (EnemyHealth == 0)
+		{
+			Debug.Log("Enemy Dead");
+
+			CombatManager cm = FindObjectOfType<CombatManager>();
+			if (cm != null)
+			{
+				cm.EndCombat();
+			}
+		}
 	}
 }
