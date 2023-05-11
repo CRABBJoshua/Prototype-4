@@ -16,6 +16,8 @@ public class TopDownCharacterController : MonoBehaviour
 
 	public WeaponDelay wd;
 
+	public GameObject SlashParticle;
+
 	//ShotCheck
 	private bool HasShot = false;
 
@@ -39,6 +41,8 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] private float playerMaxSpeed = 100f;
     [SerializeField] private GameObject Projectile;
 
+	private float cooldownTimer = 0f;
+
 
 	/// <summary>
 	/// When the script first initialises
@@ -49,6 +53,8 @@ public class TopDownCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 		cam = Camera.main;
+
+		cooldownTimer = WeaponTimer;
     }
 
 	/// <summary>
@@ -56,10 +62,12 @@ public class TopDownCharacterController : MonoBehaviour
 	/// </summary>
 	private void FixedUpdate()
     {
+		cooldownTimer += Time.fixedDeltaTime;
+
         //Set the velocity to the direction they're moving in, multiplied
         //by the speed they're moving
         rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
-		wd.SetDelay(WeaponTimer);
+		wd.SetDelay(cooldownTimer / WeaponTimer);
 		if (Keyboard.current.escapeKey.wasPressedThisFrame)
 		{
 			SceneManager.LoadScene(0);
@@ -145,7 +153,6 @@ public class TopDownCharacterController : MonoBehaviour
 			else if(HasShot)
 			{
 				Debug.Log(HasShot);
-				
 			}
 			
 		}
@@ -167,6 +174,7 @@ public class TopDownCharacterController : MonoBehaviour
 
 	IEnumerator WeaponCoolDown()
 	{
+		cooldownTimer = 0f;
 		yield return new WaitForSeconds(WeaponTimer);
 		HasShot = false;
 		Debug.Log("CoolDown!");

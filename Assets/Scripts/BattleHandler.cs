@@ -37,6 +37,7 @@ public class BattleHandler : MonoBehaviour
 
 	public HealthComponent Health;
 	public EnemyHealthComponent EnemyHealthComponent;
+	public GameObject Slash;
 
 	public void DestroyEnemyAndPlayer()
 	{

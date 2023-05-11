@@ -12,6 +12,7 @@ public class EnemyBehaviour : MonoBehaviour
 	private float distance;
 
 	Rigidbody2D rb;
+	SpriteRenderer sr;
 	public float direction;
 	public float movementSpeed;
 	public Transform Player;
@@ -24,6 +25,7 @@ public class EnemyBehaviour : MonoBehaviour
 	{
 		//Get the rigidbody
 		rb = GetComponent<Rigidbody2D>();
+		sr = GetComponent<SpriteRenderer>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -81,14 +83,19 @@ public class EnemyBehaviour : MonoBehaviour
 		//Move the player for 3 secs and then set IsMoving to false
 		rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
 		transform.Rotate(Vector3.forward * 180f);
+	
+		sr.flipY = true;
+	
 		//Debug.Log("Finished!");
 	}
 	void StopMovement()
 	{
 		//This does StopMovement in reverse
 		rb.velocity = new Vector2(-direction * movementSpeed, rb.velocity.y);
-
 		transform.Rotate(Vector3.forward * 180f);
+	
+		sr.flipY = false;
+		
 		//Debug.Log("Finished!");
 	}
 

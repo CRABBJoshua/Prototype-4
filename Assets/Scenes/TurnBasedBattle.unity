@@ -192,6 +192,7 @@ MonoBehaviour:
   EnemyHealth: 100
   Health: {fileID: 1121829136}
   EnemyHealthComponent: {fileID: 1114915812}
+  Slash: {fileID: 3680786989662796048, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
 --- !u!4 &202158347
 Transform:
   m_ObjectHideFlags: 0

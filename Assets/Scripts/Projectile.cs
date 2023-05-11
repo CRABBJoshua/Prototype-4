@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
 	void Start()
     {
 		projectile.GetComponent<Rigidbody2D>().AddForce(Force);
-    }
+	}
 
 	private void Awake()
 	{

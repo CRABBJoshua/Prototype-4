@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponTimer: 10
+  wd: {fileID: 0}
+  SlashParticle: {fileID: 3680786989662796048, guid: 573723257ecc5c647a5269866c54c99f, type: 3}
   playerMaxSpeed: 200
   Projectile: {fileID: 3002115784372848300, guid: efde4a281a1f8324990299d4e0c1ff8e, type: 3}
 --- !u!50 &3238392630053885185
