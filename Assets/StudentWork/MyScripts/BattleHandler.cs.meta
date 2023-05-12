@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 513e93abb1e5305479a336cc04c4090e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - CharacterBattle: {instanceID: 0}
+  - PlayerSprite: {instanceID: 0}
+  - EnemySprite: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
