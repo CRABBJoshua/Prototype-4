@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -99,22 +98,22 @@ public class EnemyBehaviour : MonoBehaviour
 		//Debug.Log("Finished!");
 	}
 
-	private void OnDrawGizmos()
-	{
-		Vector3 Forward = -transform.right.normalized;
-		Vector3 toOther = (Player.position - transform.position).normalized;
+	//private void OnDrawGizmos()
+	//{
+	//	Vector3 Forward = -transform.right.normalized;
+	//	Vector3 toOther = (Player.position - transform.position).normalized;
 
-		Forward.z = toOther.z = 0;
+	//	Forward.z = toOther.z = 0;
 
-		float dot = Vector2.Dot(toOther, Forward);
+	//	float dot = Vector2.Dot(toOther, Forward);
 
-		Handles.Label(transform.position + Vector3.up * 1f, $"Dot: {dot}");
+	//	Handles.Label(transform.position + Vector3.up * 1f, $"Dot: {dot}");
 		
-		Gizmos.DrawLine(transform.position, transform.position + Forward);
-		Gizmos.DrawLine(transform.position, transform.position + toOther);
-		Gizmos.DrawWireSphere(transform.position, radius);
+	//	Gizmos.DrawLine(transform.position, transform.position + Forward);
+	//	Gizmos.DrawLine(transform.position, transform.position + toOther);
+	//	Gizmos.DrawWireSphere(transform.position, radius);
 
-	}
+	//}
 
 	void Update()
 	{
