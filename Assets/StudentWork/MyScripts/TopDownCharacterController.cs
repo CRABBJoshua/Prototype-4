@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-/*
- * TODO LIST
- * Add a timer
- * Work on fine tuning the Movement
- */
+
 
 public class TopDownCharacterController : MonoBehaviour
 {

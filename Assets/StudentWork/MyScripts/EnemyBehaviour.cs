@@ -37,7 +37,6 @@ public class EnemyBehaviour : MonoBehaviour
 				cm.enemy = gameObject;
 				cm.StartCombat();
 			}
-			//CombatManager.instance.StartCombat();
 		}
 	}
 
@@ -84,8 +83,6 @@ public class EnemyBehaviour : MonoBehaviour
 		transform.Rotate(Vector3.forward * 180f);
 	
 		sr.flipY = true;
-	
-		//Debug.Log("Finished!");
 	}
 	void StopMovement()
 	{
@@ -95,8 +92,9 @@ public class EnemyBehaviour : MonoBehaviour
 	
 		sr.flipY = false;
 		
-		//Debug.Log("Finished!");
 	}
+
+	// Commented Gizmos for build
 
 	//private void OnDrawGizmos()
 	//{
@@ -138,10 +136,5 @@ public class EnemyBehaviour : MonoBehaviour
 		{
 			isChasingPlayer = false;
 		}
-	}
-
-	public void TakeDamage()
-	{
-
 	}
 }

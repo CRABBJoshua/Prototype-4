@@ -7,7 +7,6 @@ public class Projectile : MonoBehaviour
 	public GameObject projectile;
 	public float launchVelocity = 700f;
 	public Vector2 Force;
-	//private EnemyBehaviour EnemyBehaviour;
 	public int ProjectileDamage;
 	void Start()
     {
@@ -23,7 +22,6 @@ public class Projectile : MonoBehaviour
 	{
 		if (collision.tag == "Enemy")
 		{
-			Debug.Log("WAP");
 			EnemyBehaviour enemyBehaviour = collision.GetComponent<EnemyBehaviour>();
 
 			enemyBehaviour.EnemyHealth -= ProjectileDamage;

@@ -41,40 +41,28 @@ public class CharacterBattle : MonoBehaviour
 		if(isPlayerTeam)
 		{
 			Debug.Log("Player Sprite Loaded");
-			//characterBase.GetMaterial().mainTexture = BattleHandler.GetInstance().PlayerSprite;
 			characterBase.GetComponent<Renderer>().material.mainTexture = BattleHandler.GetInstance().PlayerSprite;
 		}
 		else
 		{
 			Debug.Log("Enemy Sprite Loaded");
-			//characterBase.GetMaterial().mainTexture = BattleHandler.GetInstance().PlayerSprite;
-			//gameObject.GetComponent<SpriteRenderer>().material.mainTexture = BattleHandler.GetInstance().EnemySprite;
 			gameObject.GetComponent<SpriteRenderer>().sprite = BattleHandler.TextureToSet;
-
-
-			//Debug.Log(BattleHandler.GetInstance().EnemySprite);
 		}
 	}
 
 
 	private void Update()
 	{
-		//Debug.Log(gameObject.GetComponent<SpriteRenderer>().sprite);
 
 		switch (state)
 		{
 			case State.Idle:
 				break;
 			case State.Sliding:
-				//float slideSpeed = 10f;
-				//transform.position += (slideTargetPosition - GetPosition()) * slideSpeed * Time.deltaTime;
-
 				float reachedDistance = 1f;
 				if(Vector3.Distance(GetPosition(), slideTargetPosition) < reachedDistance)
 				{
-					//Arrived at slide Target Position
-					//transform.position = slideTargetPosition;
-					//onSlideComplete();
+
 				}
 				break;
 			case State.Busy:
@@ -107,12 +95,6 @@ public class CharacterBattle : MonoBehaviour
 		Vector3 slideTargetPosition = targetCharacterBattle.GetPosition() + (GetPosition() - targetCharacterBattle.GetPosition()).normalized;
 		Vector3 startingPosition = GetPosition();
 
-		//Implement slide:
-		//- save transform.position as "originalPos"
-		//- Lerp from transform.position -> slideTargetPosition
-		//- Lerp from slideTargetPosition -> originalPos
-		//..
-
 		Vector3 originalPos = transform.position;
 
 		float t = 0.0f;
@@ -130,7 +112,6 @@ public class CharacterBattle : MonoBehaviour
 		while(t < 1.0f)
 		{
 			t += speed;
-
 			//Lerp from transform.position -> slideTargetPosition
 			transform.position = Vector3.Lerp(slideTargetPosition, originalPos, curve.Evaluate(t));
 			yield return new WaitForEndOfFrame();

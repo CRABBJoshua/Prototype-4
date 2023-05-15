@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
-//If Player attacks
-//Play Particle
-
-//Stop Particle on attack end
-
 public class BattleHandler : MonoBehaviour
 {
 	private static BattleHandler instance;
@@ -74,7 +69,6 @@ public class BattleHandler : MonoBehaviour
 
 	public void OnPlayerRequestAttack()
 	{
-		//Stuff
 		Debug.Log("attack!");
 		if (state == State.WaitingForPlayer)
 		{
@@ -96,9 +90,7 @@ public class BattleHandler : MonoBehaviour
 						if (cm != null)
 						{
 							cm.EndCombat();
-							Debug.Log("asdasd");
 						}
-						//CombatManager.instance.EndCombat();
 					}
 					Debug.Log(EnemyHealth);
 				}
@@ -135,43 +127,6 @@ public class BattleHandler : MonoBehaviour
 			Invoke("ChooseNextActiveCharacter", 2);
 		}
 	}
-
-	//private void Update()
-	//{
-	//	if (state == State.WaitingForPlayer)
-	//	{
-	//		if (Keyboard.current.spaceKey.wasPressedThisFrame)
-	//		{
-	//			state = State.Busy;
-	//			playerCharacterBattle.GunAttack(enemyCharacterBattle, () =>
-	//			{
-	//				//StartCoroutine(Delay());
-	//				Invoke("ChooseNextActiveCharacter", 2);
-	//			});
-	//		}
-	//		else if(Keyboard.current.eKey.wasPressedThisFrame)
-	//		{
-	//			state = State.Busy;
-	//			playerCharacterBattle.Attack(enemyCharacterBattle, () =>
-	//			{
-	//				if(activeCharacterBattle == playerCharacterBattle)
-	//				{
-	//					PlayerDamage = Random.Range(0, 100);
-	//					EnemyHealth = EnemyHealth - PlayerDamage;
-	//					EnemyHealth = Mathf.Clamp(EnemyHealth, 0, 100);
-
-	//					if (EnemyHealth == 0)
-	//					{
-	//						Debug.Log("Enemy Dead");
-	//					}
-	//					Debug.Log(EnemyHealth);
-	//				}
-	//				Invoke("ChooseNextActiveCharacter", 1);
-	//			});
-	//		}
-	//	}
-
-	//}
 
 	private CharacterBattle SpawnCharacter(bool isPlayerTeam, string name)
 	{
@@ -238,18 +193,12 @@ public class BattleHandler : MonoBehaviour
 
 	private void SetActiveCharacterBattle(CharacterBattle characterBattle)
 	{
-		//Debug.Log("Passed: " + characterBattle + ", Active: " + activeCharacterBattle + ", Enemy: " + enemyCharacterBattle);
 		if(activeCharacterBattle != null)
 		{
 			activeCharacterBattle.HideSelectionCircle();
 		}
 		activeCharacterBattle = characterBattle;
 		activeCharacterBattle.ShowSelectionCircle();
-	}
-
-	IEnumerator Delay()
-	{
-		yield return new WaitForSeconds(100);
 	}
 
 	public void TakeRangedDamage()
